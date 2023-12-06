@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,8 +36,14 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'rest_framework',
 	'users',
 	'api',
+	'template_app',
+	'todolist_app',
+	'django_celery_results',
+	'django_celery_beat',
+	'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
@@ -74,14 +81,20 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'HOST': os.environ.get("DB_HOST"),
-		'NAME': os.environ.get("DB_NAME"),
-		'USER': os.environ.get("DB_USER"),
-		'PASSWORD': os.environ.get("DB_PASS"),
+		'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Используется PostgreSQL
+		'NAME': 'postgres',  # Имя базы данных
+		'USER': 'postgres',  # Имя пользователя
+		'PASSWORD': 'postgres',  # Пароль пользователя
+		'HOST': 'pgdb',  # Наименование контейнера для базы данных в Docker Compose
+		'PORT': '5432',  # Порт базы данных
 	}
 }
-
+CACHES = {
+	"default": {
+		"BACKEND": "django.core.cache.backends.redis.RedisCache",
+		"LOCATION": "redis://127.0.0.1:6379/1",
+	}
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -103,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -115,9 +128,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
+
+# celery
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+# CELERY_BEAT_SCHEDULE = {
+# 	"amount-counting": {
+# 		"task": "todo.tasks.amount_counting",
+# 		"schedule": 5.0,
+# 	},
+# }
