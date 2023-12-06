@@ -5,9 +5,13 @@ from django.db import models
 
 class User(AbstractUser):
 	email = models.EmailField(max_length=254, unique=True)
+	balance = models.PositiveIntegerField(default=0)
+	points = models.PositiveIntegerField(default=0)
+	rank = models.PositiveIntegerField(default=999)
 
 	def __str__(self):
 		return self.username
+
 
 class Subscribe(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="Подписчик",related_name='subscriber')
