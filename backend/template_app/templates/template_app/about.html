@@ -1,0 +1,24 @@
+{% extends 'template_app/index.html' %}
+{% load static %}
+{% block content %}
+    <section class="about d-flex align-items-center text-light py-5" id="about">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-lg-7" data-aos="fade-right">
+                    <p>О нас</p>
+                    <h1>Всегда уверенное управление Вашим временем!</h1>
+                    <p class="py-2 para-light">Мы команда профессионалов в области разработки программных решений,
+                        которая верит в важность эффективного планирования и управления временем. Нашей целью является
+                        создание интуитивного и легкого в использовании планировщика задач для помощи в достижении ваших
+                        целей. Мы стремимся к совершенству и постоянно внедряем новые функции и улучшения нашего
+                        приложения, чтобы удовлетворить все ваши потребности в планировании.</p>
+                    <p class="py-2 para-light">С TaskMaster у вас всегда будет ясное представление о вашем расписании и
+                        задачах, поддерживая вашу продуктивность и успех.</p>
+                </div>
+                <div class="col-lg-5 text-center py-4 py-sm-0" data-aos="fade-down">
+                    <img class="img-fluid" src=" {% static 'todolist/assets/img/about.jpg' %}" alt="about">
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </section> <!-- end of about -->
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'template_app/index.html' %}
+{% load static %}
+
+{% block content %}
+
+    <link href="{% static 'todolist/css/user_table.css' %}" rel="stylesheet">
+    <section class="about d-flex align-items-center text-light py-5" id="about">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <center><h1 class="home_text">Ваши задачи</h1></center>
+
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </section> <!-- end of about -->
+
+{% endblock %}
