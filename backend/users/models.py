@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from market.models import Product
+
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -23,3 +26,8 @@ class Subscribe(models.Model):
 	class Meta:
 		verbose_name = 'Подписка'
 		verbose_name_plural = 'Подписки'
+
+class Inventory(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	quantity = models.PositiveIntegerField()
+	product = models.ForeignKey(Product,on_delete=models.CASCADE)
