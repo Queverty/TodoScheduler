@@ -63,6 +63,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'top-users' %}">Список лучших</a>
                 </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Личный кабинет</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Баланс: {{ user.balance }}</a>
+                    </li>
+                {% endif %}
             </ul>
             <span class="nav-item social-icons">
                     <span class="fa-stack">

@@ -1,16 +1,108 @@
 {% extends 'template_app/index.html' %}
 {% load static %}
 
+
 {% block content %}
+    <!-- Plans -->
+    <section class="plans d-flex align-items-center py-5" id="plans">
+        <div class="container text-light">
+            <div class="text-center pb-4">
+                <h2 class="py-2">Ваши задачи</h2>
+                <p class="para-light">Выполняйте задачи, получайте очки и получайте средства на свой баланс!</p>
+            </div>
+            <div class="row gy-4" data-aos="zoom-in">
+                <div class="col-lg-4">
+                    <div class="card bg-transparent px-4">
+                        <center><h4 class="py-2">Задачи на месяц</h4></center>
+                        <form method="POST" action="{% url 'index' %}">
+                            {% csrf_token %}
+                            <input type="text" name="Title">
+                            <input type="text" name="Description">
+                            <input type="submit" name="month" value="Submit">
+                        </form>
+                        <div class="block d-flex align-items-center">
+                            <ul>
+                                {% for w in month %}
+                                    <div class="todoList">
+                                        <input type="checkbox" id="todo_1">
+                                        <label for="todo_1">
+                                            <span class="check"></span>
+                                            {{ w.title }}
+                                        </label>
+                                        {% if w.is_completed %}
+                                            <i style="color: navajowhite" class="fa-trash-alt delete"></i>
+                                        {% else %}
+                                            <i style="color: red" class="fa-trash-alt delete"></i>
+                                        {% endif %}
+                                        <i class="far fa-trash-alt delete"></i>
+                                    </div>
+                                {% endfor %}
+                                {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-    <link href="{% static 'todolist/css/user_table.css' %}" rel="stylesheet">
-    <section class="about d-flex align-items-center text-light py-5" id="about">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <center><h1 class="home_text">Ваши задачи</h1></center>
+                <div class="col-lg-4">
+                    <div class="card bg-transparent px-4">
+                        <center><h4 class="py-2">Задачи на сегодня</h4></center>
+                        <form method="POST" action="{% url 'index' %}">
+                            {% csrf_token %}
+                            <input type="text" name="Title">
+                            <input type="text" name="Description">
+                            <input type="submit" name="day" value="Submit">
+                        </form>
+                        <div class="block d-flex align-items-center">
+                            <ul>
+                                {% for d in day %}
+                                    <div class="todoList">
+                                        <input type="checkbox" id="todo_1">
+                                        <label for="todo_1">
+                                            <span class="check"></span>
+                                            {{ d.title }}
+                                        </label>
+                                        <i class="far fa-trash-alt delete"></i>
+                                    </div>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-4">
+                    <div class="card bg-transparent px-4">
+                        <center><h4 class="py-2">Задачи на неделю</h4></center>
+                        <form method="POST" action="{% url 'index' %}">
+                            {% csrf_token %}
+                            <input type="text" name="Title">
+                            <input type="text" name="Description">
+                            <input type="submit" name="week" value="Submit">
+                        </form>
+                        <div class="block d-flex align-items-center">
+
+                            <ul>
+                                {% for m in week %}
+                                    <div class="todoList">
+                                        <input type="checkbox" id="todo_1">
+                                        <label for="todo_1">
+                                            <span class="check"></span>
+                                            {{ m.title }}
+                                        </label>
+                                        <i class="far fa-trash-alt delete"></i>
+                                    </div>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div> <!-- end of row -->
         </div> <!-- end of container -->
-    </section> <!-- end of about -->
+    </section> <!-- end of plans -->
 
 {% endblock %}
