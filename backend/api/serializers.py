@@ -4,25 +4,37 @@ from djoser.serializers import UserSerializer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
+from market.models import Product
 from todolist_app.models import TaskPerDay, BaseTask, TaskPerWeek, TaskPerMonth
-from users.models import User, Subscribe
+from users.models import User, Subscribe, Inventory
 
 
 class UsersSerializer(serializers.ModelSerializer):
+	is_subscribed = serializers.SerializerMethodField()
+	followers = serializers.SerializerMethodField()
+
 	class Meta:
 		model = User
-		fields = ('id', 'username', 'first_name', 'last_name', 'email', 'balance', 'points', 'rank')
+		fields = (
+			'id', 'username', 'first_name', 'last_name', 'email', 'balance', 'points', 'rank', 'is_subscribed',
+			'followers')
 
+	def get_is_subscribed(self, obj):
 
-# def get_is_subscribed(self, obj):
-# 	request_user = self.context.get('request_user', None).id
-# 	followers = Subscribe.objects.filter(user=request_user, author=obj).exists()
-# 	return followers
+		user_id = self.context.get('user_id')
+		user = User.objects.get(id=user_id)
+		if user.is_anonymous:
+			return False
+		return Subscribe.objects.filter(user=user, author=obj).exists()
+
+	def get_followers(self, obj):
+		return Subscribe.objects.filter(user=obj).count()
+
 
 class TaskSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = BaseTask
-		fields = ('title', 'description', 'is_completed',)
+		fields = ('title', 'description', 'is_completed', 'id')
 
 
 class TaskPerDaySerializer(TaskSerializer):
@@ -48,7 +60,7 @@ class TaskCreateSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = BaseTask
-		fields = ('title', 'description', 'user')
+		fields = ('title', 'description', 'user',)
 
 
 class TaskPerMonthCreateSerializer(serializers.ModelSerializer):
@@ -100,3 +112,22 @@ class TaskPerWeekCreateSerializer(serializers.ModelSerializer):
 										  description=validated_data['description'],
 										  user=user)
 		return task
+
+
+class ProductSerializers(serializers.ModelSerializer):
+	img = serializers.ImageField()
+
+	class Meta:
+		model = Product
+		fields = ('id','name', 'description', 'price', 'img')
+
+
+class InventorySerializers(serializers.ModelSerializer):
+	# img = serializers.ImageField()
+	product = serializers.ReadOnlyField(source='product.name')
+	img = serializers.ImageField(source='product.img')
+	description = serializers.CharField(source='product.description')
+
+	class Meta:
+		model = Inventory
+		fields = ('id','product','quantity','img','description')
