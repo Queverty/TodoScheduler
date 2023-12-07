@@ -22,12 +22,12 @@ def end_of_month():
 
 
 def today():
-	return timezone.now().date
+	return timezone.now().replace(hour=23, minute=59, second=59, microsecond=999999)
 
 
 class BaseTask(models.Model):
 	title = models.CharField(max_length=128)
-	description = models.TextField()
+	description = models.TextField(blank=True,null=True)
 	is_completed = models.BooleanField(default=False)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	created_at = models.DateField(null=True, auto_now_add=True, verbose_name='Дата создания')
