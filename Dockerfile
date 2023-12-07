@@ -4,7 +4,7 @@ COPY requirements.txt /temp/requirements.txt
 COPY backend /backend
 WORKDIR /backend
 EXPOSE 8000
-
+ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip
 RUN pip install -r /temp/requirements.txt
