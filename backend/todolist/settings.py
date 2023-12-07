@@ -37,13 +37,16 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'rest_framework',
+	'rest_framework.authtoken',
 	'users',
 	'api',
 	'template_app',
 	'todolist_app',
+	'market',
 	'django_celery_results',
 	'django_celery_beat',
 	'django.contrib.postgres',
+	'djoser',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +147,10 @@ CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
+REST_FRAMEWORK = {
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework.authentication.TokenAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+	),
+}
