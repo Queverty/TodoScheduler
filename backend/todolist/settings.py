@@ -144,9 +144,3 @@ CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-# CELERY_BEAT_SCHEDULE = {
-# 	"amount-counting": {
-# 		"task": "todo.tasks.amount_counting",
-# 		"schedule": 5.0,
-# 	},
-# }
