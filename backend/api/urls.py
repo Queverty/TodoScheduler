@@ -1,12 +1,16 @@
 from django.urls import include, path
 from rest_framework import routers
-from .views import UsersViewSet, TaskPerDayView, TaskPerWeekView, TaskPerMonthView
+from .views import TaskPerDayAPIView, TaskPerWeekAPIView, TaskPerMonthAPIView, UsersAPIView, UserProfileAPIView, \
+	MarketAPIView, InventoryAPIView
 
-router = routers.SimpleRouter()
-router.register(r'users', UsersViewSet, basename='User')
+# router = routers.SimpleRouter()
+# # router.register(r'users', UsersViewSet, basename='User')
 urlpatterns = [
-	path('', include(router.urls)),
-	path('task-day/', TaskPerDayView.as_view(), ),
-	path('task-week/', TaskPerWeekView.as_view(), ),
-	path('task-month/', TaskPerMonthView.as_view(), ),
+	path('users/', UsersAPIView.as_view(), ),
+	path('user/<int:pk>/', UserProfileAPIView.as_view(), ),
+	path('task-day/', TaskPerDayAPIView.as_view(), ),
+	path('task-week/', TaskPerWeekAPIView.as_view(), ),
+	path('task-month/', TaskPerMonthAPIView.as_view(), ),
+	path('products/', MarketAPIView.as_view(), ),
+	path('inventory/', InventoryAPIView.as_view(), ),
 ]
