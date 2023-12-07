@@ -6,7 +6,7 @@
     <section class="about d-flex align-items-center text-light py-5" id="about">
         <div class="container">
             <div class="row d-flex align-items-center">
-            <center><h1 class="home_text">Топ пользователей</h1></center>
+                <center><h1 class="home_text">Топ пользователей</h1></center>
                 <table class="styled-table">
                     <thead>
                     <tr>
@@ -21,9 +21,15 @@
                     {% for user in users %}
                         <tr class="active-row">
                             <td>{{ user.rank }}</td>
-                            <td>{{ user.username }}</td>
+                            <td><a href="{% url 'user' pk=user.id %}">{{ user.username }}</a></td>
                             <td>{{ user.points }}</td>
-                            <td><a href="">Подписаться</a></td>
+                            {% if user.is_subscribed %}
+                                <td><a href="">Отписаться</a></td>
+                            {% elif request.user.username == user.username %}
+                                <td><a>Это вы</a></td>
+                            {% else %}
+                                <td><a href="">Подписаться</a></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
 

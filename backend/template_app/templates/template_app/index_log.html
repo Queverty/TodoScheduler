@@ -4,6 +4,8 @@
 
 {% block content %}
     <!-- Plans -->
+    <link href="{% static 'todolist/css/todo.css' %}" rel="stylesheet">
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/check-r.css' rel='stylesheet'>
     <section class="plans d-flex align-items-center py-5" id="plans">
         <div class="container text-light">
             <div class="text-center pb-4">
@@ -14,27 +16,37 @@
                 <div class="col-lg-4">
                     <div class="card bg-transparent px-4">
                         <center><h4 class="py-2">Задачи на месяц</h4></center>
-                        <form method="POST" action="{% url 'index' %}">
-                            {% csrf_token %}
-                            <input type="text" name="Title">
-                            <input type="text" name="Description">
-                            <input type="submit" name="month" value="Submit">
-                        </form>
+                        <div class="my-3">
+                            <center><a class="btn" href="#css-modal-target-1">Добавить задачи</a></center>
+                        </div>
+
+                        <!-- Модальное окно -->
+                        <div class="css-modal-target" id="css-modal-target-1">
+                            <div class="cmt">
+                                <form method="POST" action="{% url 'index' %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="Title" placeholder="Название">
+                                    <input type="text" name="Description" placeholder="Описание">
+                                    <input class="css-modal-open" type="submit" name="month" value="Добавить">
+
+                                </form>
+                            </div>
+                            <a href="#close" class="css-modal-close"></a>
+                        </div>
                         <div class="block d-flex align-items-center">
                             <ul>
                                 {% for w in month %}
                                     <div class="todoList">
-                                        <input type="checkbox" id="todo_1">
-                                        <label for="todo_1">
-                                            <span class="check"></span>
-                                            {{ w.title }}
-                                        </label>
+                                        <h5>{{ w.title }}</h5>
                                         {% if w.is_completed %}
-                                            <i style="color: navajowhite" class="fa-trash-alt delete"></i>
+                                            <i style="color: green" class="gg-check-r"></i></i>
                                         {% else %}
-                                            <i style="color: red" class="fa-trash-alt delete"></i>
+                                            <a href="{% url 'taskcompleted' pk=w.id type='month' %}"><i
+                                                    style="color: red"
+                                                    class="gg-check-r"></i></a>
                                         {% endif %}
-                                        <i class="far fa-trash-alt delete"></i>
+                                        <a href="{% url 'taskdelete' pk=w.id type='month' %}"><i
+                                                class="far fa-trash-alt delete"></i></a>
                                     </div>
                                 {% endfor %}
                                 {% if messages %}
@@ -52,24 +64,43 @@
                 <div class="col-lg-4">
                     <div class="card bg-transparent px-4">
                         <center><h4 class="py-2">Задачи на сегодня</h4></center>
-                        <form method="POST" action="{% url 'index' %}">
-                            {% csrf_token %}
-                            <input type="text" name="Title">
-                            <input type="text" name="Description">
-                            <input type="submit" name="day" value="Submit">
-                        </form>
+                        <div class="my-3">
+                            <center><a class="btn" href="#css-modal-target-2">Добавить задачи</a></center>
+                        </div>
+                        <div class="css-modal-target" id="css-modal-target-2">
+                            <div class="cmt">
+                                <form method="POST" action="{% url 'index' %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="Title">
+                                    <input type="text" name="Description">
+                                    <input type="submit" name="day" value="Добавить">
+                                </form>
+                            </div>
+                            <a href="#close" class="css-modal-close"></a>
+                        </div>
                         <div class="block d-flex align-items-center">
                             <ul>
                                 {% for d in day %}
                                     <div class="todoList">
-                                        <input type="checkbox" id="todo_1">
-                                        <label for="todo_1">
-                                            <span class="check"></span>
-                                            {{ d.title }}
-                                        </label>
-                                        <i class="far fa-trash-alt delete"></i>
+                                        <h5>{{ d.title }}</h5>
+                                        {% if d.is_completed %}
+                                            <i style="color: green" class="gg-check-r"></i></i>
+                                        {% else %}
+                                            <a href="{% url 'taskcompleted' pk=d.id type='day' %}"><i
+                                                    style="color: red"
+                                                    class="gg-check-r"></i></a>
+                                        {% endif %}
+                                        <a href="{% url 'taskdelete' pk=d.id type='day' %}"><i
+                                                class="far fa-trash-alt delete"></i></a>
                                     </div>
                                 {% endfor %}
+                                {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -78,25 +109,45 @@
                 <div class="col-lg-4">
                     <div class="card bg-transparent px-4">
                         <center><h4 class="py-2">Задачи на неделю</h4></center>
-                        <form method="POST" action="{% url 'index' %}">
-                            {% csrf_token %}
-                            <input type="text" name="Title">
-                            <input type="text" name="Description">
-                            <input type="submit" name="week" value="Submit">
-                        </form>
+                        <div class="my-3">
+                            <center><a class="btn" href="#css-modal-target-3">Добавить задачи</a></center>
+                        </div>
+                        <div class="css-modal-target" id="css-modal-target-3">
+                            <div class="cmt">
+                                <form method="POST" action="{% url 'index' %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="Title">
+                                    <input type="text" name="Description">
+                                    <input type="submit" name="week" value="Добавить">
+
+                                </form>
+                            </div>
+                            <a href="#close" class="css-modal-close"></a>
+                        </div>
                         <div class="block d-flex align-items-center">
 
                             <ul>
                                 {% for m in week %}
                                     <div class="todoList">
-                                        <input type="checkbox" id="todo_1">
-                                        <label for="todo_1">
-                                            <span class="check"></span>
-                                            {{ m.title }}
-                                        </label>
-                                        <i class="far fa-trash-alt delete"></i>
+                                        <h5>{{ m.title }}</h5>
+                                        {% if m.is_completed %}
+                                            <i style="color: green" class="gg-check-r"></i></i>
+                                        {% else %}
+                                            <a href="{% url 'taskcompleted' pk=m.id type='week' %}"><i
+                                                    style="color: red"
+                                                    class="gg-check-r"></i></a>
+                                        {% endif %}
+                                        <a href="{% url 'taskdelete' pk=m.id type='week' %}"><i
+                                                class="far fa-trash-alt delete"></i></a>
                                     </div>
                                 {% endfor %}
+                                {% if messages %}
+                                    <ul class="messages">
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>

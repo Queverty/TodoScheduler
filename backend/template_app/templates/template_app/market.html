@@ -1,0 +1,36 @@
+{% extends 'template_app/index.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Services -->
+    <section class="services d-flex align-items-center py-5" id="services">
+        <div class="container text-light">
+            <div class="text-center pb-4">
+                <h2 class="py-2">Наш магазин</h2>
+            </div>
+            <div class="row gy-4 py-2" data-aos="zoom-in">
+                {% for product in products %}
+                    <div class="col-lg-4">
+                        <div class="card bg-transparent">
+                            <i class="fas fa-home fa-2x"></i>
+                            <h4 class="py-2">{{ product.name }}</h4>
+                            <p class="para-light">Описание - {{ product.description }}</p>
+                            <p class="para-light">Цена - {{ product.price }}</p>
+                            <img src="{{ product.img.url }}">
+                            <div class="my-3">
+                                <a class="btn" href="{% url 'inventory-bay' pk=product.id %}">Купить</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </section> <!-- end of services -->
+{% endblock %}
