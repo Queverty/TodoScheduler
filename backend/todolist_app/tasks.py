@@ -6,6 +6,6 @@ from todolist_app.models import TaskPerDay, TaskPerWeek
 
 @shared_task
 def delete_expired_objects():
-	expired_objects = TaskPerWeek.objects.filter(due_date__lte=now())
+	expired_objects = TaskPerDay.objects.filter(due_date__lte=now())
 	expired_objects.delete()
 
