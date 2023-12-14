@@ -22,8 +22,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     container_name: pgdb
-
-
+    ports:
+      - 5432:5432
   redis:
     image: redis:alpine
 
