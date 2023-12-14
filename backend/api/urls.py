@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from .views import TaskPerDayAPIView, TaskPerWeekAPIView, TaskPerMonthAPIView, UsersAPIView, UserProfileAPIView, \
-	MarketAPIView, InventoryAPIView
+	MarketAPIView, InventoryAPIView, UserSubscribeAPIView, UserUnSubscribeAPIView
 
 # router = routers.SimpleRouter()
 # # router.register(r'users', UsersViewSet, basename='User')
@@ -13,4 +13,6 @@ urlpatterns = [
 	path('task-month/', TaskPerMonthAPIView.as_view(), ),
 	path('products/', MarketAPIView.as_view(), ),
 	path('inventory/', InventoryAPIView.as_view(), ),
+	path('subscribe/', UserSubscribeAPIView.as_view(), ),
+	path('unsubscribe/', UserUnSubscribeAPIView.as_view(), ),
 ]
