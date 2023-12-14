@@ -9,5 +9,7 @@ class TaskPerDayService(Service):
 	user = forms.IntegerField()
 
 	def process(self):
-		user = User.objects.get(id=self.cleaned_data['user'])
-		return TaskPerDay.objects.filter(user=user)
+		return TaskPerDay.objects.filter(user=self.get_user)
+	@property
+	def get_user(self):
+		return User.objects.get(id=self.cleaned_data['user'])
