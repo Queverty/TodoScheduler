@@ -16,7 +16,7 @@ from .services.market_buy import ProductBayGetService
 from rest_framework.response import Response
 from market.models import Product
 from todolist_app.models import TaskPerMonth, TaskPerWeek, TaskPerDay
-
+from users.models import Subscribe
 
 class UsersAPIView(APIView):
 
@@ -146,8 +146,10 @@ class MarketAPIView(APIView):
 	def put(self, request, *args, **kwargs):
 		prod_id = request.GET.get('prod_id')
 		user_id = request.GET.get('user_id')
-		outcome = ProductBayGetService.execute({'user_id':user_id,'product_id':prod_id})
+		outcome = ProductBayGetService.execute({'user_id': user_id, 'product_id': prod_id})
 		return Response(data=(outcome))
+
+
 class InventoryAPIView(APIView):
 
 	def get(self, request):
@@ -161,3 +163,21 @@ class InventoryAPIView(APIView):
 		user_id = request.GET.get('user_id')
 		inv = Inventory.objects.filter(user=user_id).delete()
 		return Response(status=200)
+
+
+class UserSubscribeAPIView(APIView):
+
+	def get(self, request):
+		author = User.objects.get(id=request.GET.get('author'))
+		user = User.objects.get(id=request.GET.get('user'))
+		queryset = Subscribe.objects.create(author=author,user=user)
+		queryset.save()
+		return Response(status=201)
+
+class UserUnSubscribeAPIView(APIView):
+
+	def get(self, request):
+		author = User.objects.get(id=request.GET.get('author'))
+		user = User.objects.get(id=request.GET.get('user'))
+		queryset = Subscribe.objects.filter(author=author,user=user).delete()
+		return Response(status=204)
