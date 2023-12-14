@@ -1,41 +1,21 @@
+{% extends 'template_app/index.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TaskMaster - Регистрация</title>
+{% block content %}
     <link rel="stylesheet" type="text/css" href="{% static 'todolist/css/register.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-</head>
-<body>
-<div class="main">
-    <input type="checkbox" id="chk" aria-hidden="true">
-
-    {#    <div class="signup">#}
-    {#        {% if messages %}#}
-    {#            <ul class="messages">#}
-    {#                {% for message in messages %}#}
-    {#                    <h1>{{ message }}</h1>#}
-    {#                {% endfor %}#}
-    {#            </ul>#}
-    {#        {% endif %}#}
-    {#        <form method="POST" action="{% url 'register' %}">#}
-    {#            {% csrf_token %}#}
-    {#            <label for="chk" aria-hidden="true">Sign up</label>#}
-    {#            <input type="text" name="txt" placeholder="User name" required="">#}
-    {#            <input type="email" name="email" placeholder="Email" required="">#}
-    {#            <input type="password" name="pswd" placeholder="Password" required="">#}
-    {#            <button>Sign up</button>#}
-    {#        </form>#}
-    {#    </div>#}
-    <div class="login">
-        <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            <label>Login</label>
-            <input type="username" name="username" placeholder="username" required="">
-            <input type="password" name="pswd" placeholder="Password" required="">
-            <button>Login</button>
-        </form>
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="signup">
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <label>Авторизация</label>
+                <input type="username" name="username" placeholder="Логин" required="">
+                <input type="password" name="pswd" placeholder="Пароль" required="">
+                <button>Войти</button>
+            </form>
+        </div>
+        <div class="login">
+            <label><a style="color: #0a53be" href="{% url 'register' %}">Регистрация</a></label>
+        </div>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}

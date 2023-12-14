@@ -7,6 +7,13 @@
         <div class="container">
             <div class="row d-flex align-items-center">
                 <center><h1 class="home_text">Топ пользователей</h1></center>
+                <div class="col-lg-6 d-flex align-items-center" data-aos="fade-down">
+                    <div class="input-group my-3">
+                        <input type="text" class="form-control p-2" placeholder="Ввидите никнейм"
+                               aria-label="Recipient's email">
+                        <button class="btn-secondary text-light" type="button">Поиск</button>
+                    </div>
+                </div>
                 <table class="styled-table">
                     <thead>
                     <tr>
@@ -24,11 +31,11 @@
                             <td><a href="{% url 'user' pk=user.id %}">{{ user.username }}</a></td>
                             <td>{{ user.points }}</td>
                             {% if user.is_subscribed %}
-                                <td><a href="">Отписаться</a></td>
-                            {% elif request.user.username == user.username %}
+                                <td><a href="{% url 'unsubscribe' pk=user.id %}">Отписаться</a></td>
+                            {% elif request.session.session_user == user.id %}
                                 <td><a>Это вы</a></td>
                             {% else %}
-                                <td><a href="">Подписаться</a></td>
+                                <td><a href="{% url 'subscribe' pk=user.id %}">Подписаться</a></td>
                             {% endif %}
                         </tr>
                     {% endfor %}

@@ -63,34 +63,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'about' %}">О нас</a>
                 </li>
-                {% if user.is_authenticated %}
+                {% if request.session.session_user %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'user' pk=user.id %}">Личный кабинет</a>
+                        <a class="nav-link" href="{% url 'user-me' %}">Личный кабинет</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'inventory' %}" class="nav-link">Баланс: {{ user.balance }}</a>
+                        <a href="{% url 'inventory' %}" class="nav-link">Инвентарь</a>
                     </li>
                 {% else %}
 
                     <li class="nav-item">
-                        <a class="nav-link" href="№;">Войти</a>
+                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
                     </li>
                 {% endif %}
             </ul>
-            <span class="nav-item social-icons">
-                    <span class="fa-stack">
-                        <a href="#your-link">
-                            <i class="fas fa-circle fa-stack-2x"></i>
-                            <i class="fab fa-facebook-f fa-stack-1x"></i>
-                        </a>
-                    </span>
-                    <span class="fa-stack">
-                        <a href="#your-link">
-                            <i class="fas fa-circle fa-stack-2x"></i>
-                            <i class="fab fa-twitter fa-stack-1x"></i>
-                        </a>
-                    </span>
-                </span>
+
         </div> <!-- end of navbar-collapse -->
     </div> <!-- end of container -->
 </nav> <!-- end of navbar -->
@@ -105,19 +92,12 @@
                 эффективно организовать и управлять своими рабочими, учебными или личными задачами. Будьте на шаг
                 впереди и держите все ваши задачи под контролем с помощью TaskMaster.</p>
             <div class="my-3">
-                <a class="btn" href="#plans">Войти в личный кабинет</a>
+                <a class="btn" href="{% url 'login' %}">Войти в личный кабинет</a>
             </div>
         </div> <!-- end of container -->
     </section> <!-- end of home -->
 {% endblock %}
-<!-- Bottom -->
-<div class="bottom py-2 text-light">
-    <div class="container d-flex justify-content-between">
-        <div>
-            <p>© Queverty 2023</p><br>
-        </div>
-    </div> <!-- end of container -->
-</div> <!-- end of bottom -->
+
 
 
 <!-- Scripts -->
