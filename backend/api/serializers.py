@@ -22,9 +22,9 @@ class UsersSerializer(serializers.ModelSerializer):
 	def get_is_subscribed(self, obj):
 
 		user_id = self.context.get('user_id')
-		user = User.objects.get(id=user_id)
-		if user.is_anonymous:
+		if user_id == None:
 			return False
+		user = User.objects.get(id=user_id)
 		return Subscribe.objects.filter(user=user, author=obj).exists()
 
 	def get_followers(self, obj):
@@ -71,7 +71,6 @@ class TaskPerMonthCreateSerializer(serializers.ModelSerializer):
 		fields = ('user', 'title', 'description',)
 
 	def create(self, validated_data):
-		print(validated_data)
 		user_id = validated_data.pop('user')
 		user = User.objects.get(id=user_id)
 		task = TaskPerMonth.objects.create(title=validated_data['title'],
@@ -88,7 +87,6 @@ class TaskPerDayCreateSerializer(serializers.ModelSerializer):
 		fields = ('user', 'title', 'description',)
 
 	def create(self, validated_data):
-		print(validated_data)
 		user_id = validated_data.pop('user')
 		user = User.objects.get(id=user_id)
 		task = TaskPerDay.objects.create(title=validated_data['title'],
@@ -105,7 +103,6 @@ class TaskPerWeekCreateSerializer(serializers.ModelSerializer):
 		fields = ('user', 'title', 'description',)
 
 	def create(self, validated_data):
-		print(validated_data)
 		user_id = validated_data.pop('user')
 		user = User.objects.get(id=user_id)
 		task = TaskPerWeek.objects.create(title=validated_data['title'],
