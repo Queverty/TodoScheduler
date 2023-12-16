@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 	'django_celery_beat',
 	'django.contrib.postgres',
 	'djoser',
+	'channels',
+	'chat',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +80,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'todolist.wsgi.application'
+ASGI_APPLICATION = "todolist.asgi.application"
+CHANNEL_LAYERS = {
+	"default": {
+		"BACKEND": "channels_redis.core.RedisChannelLayer",
+		"CONFIG": {
+			"hosts": [("redis", 6379)],
+
+		},
+	},
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -142,7 +154,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
 # celery
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_RESULT_SERIALIZER = 'json'
