@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Your description">
-    <meta name="author" content="Your name">
 
     <!-- OG Meta Tags to improve the way the post looks when you share the page on Facebook, Twitter, LinkedIn -->
     <meta property="og:site_name" content=""/> <!-- website name -->
@@ -60,9 +57,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'top-users' %}">Список лучших</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">О нас</a>
-                </li>
                 {% if request.session.session_user %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'user-me' %}">Личный кабинет</a>
@@ -70,12 +64,18 @@
                     <li class="nav-item">
                         <a href="{% url 'inventory' %}" class="nav-link">Инвентарь</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{% url 'chat-room' room_name='globalchat' %}" class="nav-link">Глобальный чат</a>
+                    </li>
                 {% else %}
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Войти</a>
                     </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">О нас</a>
+                </li>
             </ul>
 
         </div> <!-- end of navbar-collapse -->
