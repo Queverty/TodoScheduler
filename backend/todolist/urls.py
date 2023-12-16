@@ -25,6 +25,7 @@ urlpatterns = [
 				  path('api/auth/', include('djoser.urls')),
 				  re_path(r'api/auth/', include('djoser.urls.authtoken')),
 				  path('', include('template_app.urls')),
+				  path('chat/', include('chat.urls')),
 			  ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
