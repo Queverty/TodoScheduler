@@ -33,6 +33,8 @@ class BaseTask(models.Model):
 	created_at = models.DateField(null=True, auto_now_add=True, verbose_name='Дата создания')
 	updated_at = models.DateField(auto_now=True, verbose_name='Дата обновления')
 
+	def __str__(self):
+		return f'Задача - {self.title}. Пользователь - {self.user}'
 
 class TaskPerDay(BaseTask):
 	due_date = models.DateField(default=today)

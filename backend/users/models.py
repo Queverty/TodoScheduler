@@ -31,3 +31,9 @@ class Inventory(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	quantity = models.PositiveIntegerField()
 	product = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+	def __str__(self):
+		return f'Предмет пользователя - {self.user}'
+	class Meta:
+		verbose_name = "Инвентарь"
+		verbose_name_plural = "Инвентарь"
