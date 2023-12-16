@@ -142,7 +142,7 @@ class UserRegisterView(View):
 		else:
 			mes = "Вы успешно Зарегистрировались! Теперь Вы можете зайти на свой аккаунт."
 		messages.add_message(request, messages.INFO, mes)
-		return HttpResponseRedirect(request.META['HTTP_REFERER'])
+		return redirect('login')
 
 
 class UserLoginView(View):
