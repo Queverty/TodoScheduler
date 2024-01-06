@@ -8,7 +8,8 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip
 RUN pip install -r /temp/requirements.txt
-
+#FROM nginx:latest
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
 RUN adduser --disabled-password service-user
 USER service-user
 
