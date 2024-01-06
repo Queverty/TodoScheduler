@@ -13,6 +13,10 @@ from .services.task_month_complited import TaskPerMonthComplitedService
 from .services.task_deleted import TaskDeletedService
 from .services.queryset_market import ProductQuerySetGetService
 from .services.market_buy import ProductBayGetService
+from .services.inventory_user import InventoryGetService
+from .services.inventory_user_delete import InventoryDeleteService
+from .services.user_subscribe import SubscribeService
+from .services.user_unsubscribe import UnSubscribeService
 from rest_framework.response import Response
 from market.models import Product
 from todolist_app.models import TaskPerMonth, TaskPerWeek, TaskPerDay
@@ -154,30 +158,28 @@ class InventoryAPIView(APIView):
 
 	def get(self, request):
 		user_id = request.GET.get('user_id')
-		user = User.objects.get(id=user_id)
-		queryset = Inventory.objects.filter(user=user)
+		queryset = InventoryGetService.execute({'user_id':user_id})
 		serializer = InventorySerializers(queryset, many=True)
 		return Response(serializer.data)
 
 	def delete(self, request, *args, **kwargs):
 		user_id = request.GET.get('user_id')
-		inv = Inventory.objects.filter(user=user_id).delete()
+		queryset = InventoryDeleteService.execute({'user_id':user_id})
 		return Response(status=200)
 
 
 class UserSubscribeAPIView(APIView):
 
 	def get(self, request):
-		author = User.objects.get(id=request.GET.get('author'))
-		user = User.objects.get(id=request.GET.get('user'))
-		queryset = Subscribe.objects.create(author=author,user=user)
-		queryset.save()
+		author_id = request.GET.get('author')
+		user_id = request.GET.get('user')
+		queryset = SubscribeService.execute({'author_id':author_id,'user_id':user_id})
 		return Response(status=201)
 
 class UserUnSubscribeAPIView(APIView):
 
 	def get(self, request):
-		author = User.objects.get(id=request.GET.get('author'))
-		user = User.objects.get(id=request.GET.get('user'))
-		queryset = Subscribe.objects.filter(author=author,user=user).delete()
+		author_id = request.GET.get('author')
+		user_id = request.GET.get('user')
+		queryset = UnSubscribeService.execute({'author_id':author_id,'user_id':user_id})
 		return Response(status=204)
